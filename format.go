@@ -12,7 +12,7 @@ import (
 )
 
 const (
-	timeFormat     = "2006/01/02 15:04:05.000000"
+	timeFormat     = "2006/01/02T15:04:05.000000"
 	termTimeFormat = timeFormat
 	floatFormat    = 'f'
 	termMsgJust    = 40
@@ -64,9 +64,9 @@ func TerminalFormat() Format {
 		b := &bytes.Buffer{}
 		lvl := strings.ToUpper(r.Lvl.String())
 		if color > 0 {
-			fmt.Fprintf(b, "\x1b[%dm%s\x1b[0m[%s] %s ", color, lvl, r.Time.Format(termTimeFormat), r.Msg)
+			fmt.Fprintf(b, "%s \x1b[%dm%s\x1b[0m %s ", r.Time.Format(termTimeFormat), color, lvl, r.Msg)
 		} else {
-			fmt.Fprintf(b, "[%s] [%s] %s ", lvl, r.Time.Format(termTimeFormat), r.Msg)
+			fmt.Fprintf(b, "%s %s %s ", r.Time.Format(termTimeFormat), lvl, r.Msg)
 		}
 
 		// try to justify the log output for short messages
